@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روابط التواصل -جزراة حمامة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.pinimg.com/originals/6c/17/37/6c173703331317c40f6c3d2586281274.gif');
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            transform: scale(1.1); /* To avoid hard edges from blur */
+            z-index: -1;
+        }
+
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 1s ease-out, visibility 1s ease-out;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .splash-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #c0a062;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+        }
+
+        .splash-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .splash-title {
+            color: #c0a062; /* Gold color */
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease-in 0.5s both;
+        }
+
+        .splash-subtitle {
+            color: #f0f0f0;
+            font-size: 18px;
+            animation: fadeIn 1s ease-in 0.8s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 680px;
+            width: 100%;
+            min-height: 100vh;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: scaleIn 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #2c2c2c;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 3px solid #c0a062;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover; /* Prevents image distortion */
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            /* Shimmer Effect */
+            background: linear-gradient(135deg, #c0a062 25%, #f0f0f0 50%, #c0a062 75%);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 100% 0;
+            }
+            100% {
+                background-position: -100% 0;
+            }
+        }
+
+
+
+
+
+        .profile-bio {
+            font-size: 16px;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-item {
+            background: rgba(28, 28, 28, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none; 
+            color: inherit;
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        .link-item:nth-child(1) { animation-delay: 0.1s; }
+        .link-item:nth-child(2) { animation-delay: 0.2s; }
+        .link-item:nth-child(3) { animation-delay: 0.3s; }
+        .link-item:nth-child(4) { animation-delay: 0.4s; }
+        .link-item:nth-child(5) { animation-delay: 0.5s; }
+        .link-item:nth-child(6) { animation-delay: 0.6s; }
+        .link-item:nth-child(7) { animation-delay: 0.7s; } /* New WhatsApp link */
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .link-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            background: #3a3a3a;
+        }
+
+        .link-item:hover .link-icon {
+            animation: icon-shake 0.5s;
+        }
+
+        @keyframes icon-shake {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+
+        .link-item:active {
+            transform: scale(0.98);
+        }
+
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+            background: #c0a062; /* Gold color */
+            color: #1c1c1c;
+        }
+
+        .link-content {
+            flex: 1;
+            text-align: right;
+        }
+
+        .link-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f0f0f0;
+            margin-bottom: 4px;
+        }
+
+        .link-subtitle {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .link-arrow {
+            font-size: 24px;
+            color: #c0a062;
+            transition: transform 0.3s ease;
+        }
+
+        .link-item:hover .link-arrow {
+            transform: translateX(-5px);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            z-index: 1000;
+            transition: bottom 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            bottom: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .profile-name {
+                font-size: 24px;
+            }
+            
+            .link-item {
+                padding: 16px 20px;
+            }
+            
+            .link-title {
+                font-size: 16px;
+            }
+            
+            .link-subtitle {
+                font-size: 13px;
+            }
+        }
+    </style>
+    <style>
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        #footer-link {
+            color: #c0a062; /* Gold color */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        #footer-link:hover {
+            color: #fff;
+        }
+        #footer-link i {
+            margin-right: 5px; /* Space between text and icon */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-layer"></div>
+
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <img src="https://i.ibb.co/SX8my3Bh/image.png" alt="Guzart Hamama Logo" class="splash-logo">
+            <h1 class="splash-title">جزارة حمامة</h1>
+            <p class="splash-subtitle">بترحب بيك</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-section">
+            <div class="avatar">
+                <img src="https://i.ibb.co/SX8my3Bh/image.png" alt="Avatar">
+            </div>
+            <div class="profile-name">جزارة حمامة </div>
+            <div class="profile-bio">  تقدر تتواصل معانا  </div>
+        </div>
+
+        <div class="links-container">
+            <a href="https://www.facebook.com/Hamamah.eg" class="link-item" data-platform="فيسبوك">
+                <div class="link-icon"><i class="fab fa-facebook-f"></i></div>
+                <div class="link-content">
+                    <div class="link-title">فيسبوك</div>
+                    <div class="link-subtitle">تابعنا على Facebook</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+
+            <a href="https://www.instagram.com/guzarthamama" class="link-item" data-platform="إنستجرام">
+                <div class="link-icon"><i class="fab fa-instagram"></i></div>
+                <div class="link-content">
+                    <div class="link-title">إنستجرام</div>
+                    <div class="link-subtitle">شاهد آخر أعمالنا</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+
+            <a href="https://www.tiktok.com/@guzarthamama" class="link-item" data-platform="تيك توك">
+                <div class="link-icon"><i class="fab fa-tiktok"></i></div>
+                <div class="link-content">
+                    <div class="link-title">تيك توك</div>
+                    <div class="link-subtitle">فيديوهات قصيرة ومميزة</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+
+            <a href="tel:+201286100768" class="link-item" data-platform="الهاتف">
+                <div class="link-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="link-content">
+                    <div class="link-title">موبايل 1</div>
+                    <div class="link-subtitle">+201286100768</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+
+            <a href="tel:+201000964218" class="link-item" data-platform="الهاتف">
+                <div class="link-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="link-content">
+                    <div class="link-title">موبايل 2</div>
+                    <div class="link-subtitle">+201000964218</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+
+            <a href="tel:+2034397875" class="link-item" data-platform="الهاتف">
+                <div class="link-icon"><i class="fas fa-phone"></i></div>
+                <div class="link-content">
+                    <div class="link-title">الخط الأرضي</div>
+                    <div class="link-subtitle">034397875</div>
+                </div>
+                <div class="link-arrow">›</div>
+            </a>
+        </div>
+
+        <a href="https://wa.me/201000964218" class="link-item" data-platform="واتساب">
+            <div class="link-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="link-content">
+                <div class="link-title">واتساب</div>
+                <div class="link-subtitle">+20 100 096 4218</div>
+            </div>
+            <div class="link-arrow">›</div>
+        </a>
+
+
+        <footer>
+            <p>
+                تم الإنشاء بواسطة 
+                <a href="https://guardxfly.com" target="_blank" id="footer-link">
+                    جارد إكس فلاي <i class="fas fa-paper-plane"></i>
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Splash screen logic
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splashScreen');
+            setTimeout(() => {
+                splash.classList.add('hidden');
+            }, 2000); // Keep splash screen for 2 seconds
+        });
+
+        const links = document.querySelectorAll('.link-item');
+        const toast = document.getElementById('toast');
+        const footerLink = document.getElementById('footer-link');
+        let toastTimeout;
+
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            // Hide toast after 2 seconds
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 1. Prevent the link from navigating immediately
+                e.preventDefault();
+                
+                const platform = this.getAttribute('data-platform');
+                const destination = this.href;
+
+                // Clear previous timeout
+                clearTimeout(toastTimeout);
+                showToast(`جاري توجيهك إلى ${platform}...`);
+
+                // 2. Wait for a moment, then navigate
+                setTimeout(() => {
+                    window.location.href = destination;
+                }, 1500); // Delay navigation for 1.5 seconds
+            });
+        });
+
+        footerLink.addEventListener('click', function(e) {
+            // 1. Prevent the link from navigating immediately
+            e.preventDefault();
+            const destination = this.href;
+
+            // Clear previous timeout
+            clearTimeout(toastTimeout);
+            showToast('مع جارد إكس فلاي هتطير');
+
+            // 2. Wait for a moment, then navigate
+            setTimeout(() => {
+                window.open(destination, '_blank');
+            }, 1500); // Delay navigation for 1.5 seconds
+        });
+
+    </script>
+</body>
+</html>
